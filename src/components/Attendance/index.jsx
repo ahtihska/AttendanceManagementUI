@@ -4,25 +4,20 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: '#0F1E23',
-    minHeight: '100vh', // Set minimum height to fill the entire viewport
-  },
-  footer: {
-    backgroundColor: '#0F1E23',
+    minHeight: '100vh',
     color: '#fff',
-    padding: theme.spacing(2),
   },
 }));
 
-const Footer = () => {
+const Attendance = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <footer className={classes.footer}>
-
-      </footer>
+      <h1>Attendance Page</h1>
+      {/* Add your attendance-related components and content here */}
     </div>
   );
 };
 
-export default Footer;
+export default Attendance;
