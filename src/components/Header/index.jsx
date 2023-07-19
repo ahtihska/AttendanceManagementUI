@@ -1,9 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
@@ -29,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     display: 'flex',
     alignItems: 'center',
+    marginRight: theme.spacing(4)
   },
   logo: {
     width: 30,
@@ -39,19 +38,26 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Poppins',
     fontWeight: 'bold',
     flex: 1,
+    fontWeight: 'light',
+    marginLeft: theme.spacing(2),
   },
-  navButtons: {
-    display: 'flex',
-    alignItems: 'center',
-    fontFamily: 'Poppins',
-    fontWeight: 'bold',
-    '& > *:not(:last-child)': {
-      marginLeft: theme.spacing(2),
-      [theme.breakpoints.up('md')]: {
-        marginLeft: theme.spacing(1),
-      },
-    },
+navButtons: {
+  display: 'flex',
+  alignItems: 'center',
+  fontFamily: 'Poppins',
+  fontWeight: 'bold',
+  marginRight: theme.spacing(2),
+  '& > *:not(:last-child)': {
+    marginRight: theme.spacing(2),
   },
+  '& > *:nth-child(3)': {
+    marginLeft: theme.spacing(2),
+  },
+   '& > *:last-child': {
+     marginLeft: theme.spacing(2), // Add spacing to the last button
+   },
+},
+
   navButton: {
     textTransform: 'none',
     color: '#fff',
@@ -59,12 +65,13 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Poppins',
     fontWeight: 'regular',
     position: 'relative',
+    textDecoration: 'none',
     '&::after': {
       content: "''",
       position: 'absolute',
       width: '100%',
       height: '4px',
-      bottom: '-26px',
+      bottom: '-36px',
       backgroundColor: '#F47458',
       left: 0,
       opacity: 0,
@@ -135,24 +142,40 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" className={classes.appBar}>
+    <div className={classes.appBar}>
       <Toolbar>
         <div className={classes.headerContent}>
           <div className={classes.logoContainer} style={{ marginTop: '6px' }}>
             <img src={logo} alt="Logo" className={classes.logo} />
-            <Typography variant="h5" className={classes.appName}>
-              Attend
-            </Typography>
+            <Typography variant="h5" className={classes.appName} style={{ fontFamily: 'Poppins', fontWeight: 'bold', color: '#fff', flex: 1 }}>
+               Attend
+             </Typography>
           </div>
-          <div className={classes.navButtons} style={{ marginTop: '6px' }}>
-            <Button component={Link} to="/" className={classes.navButton}>
+          <div className={classes.navButtons} style={{ marginTop: '6px', fontFamily: 'Poppins' }}>
+            <Typography
+              variant="body1"
+              component={Link}
+              to="/"
+              className={classes.navButton}
+              style={{ marginLeft: '16px', fontFamily: 'Poppins' }}
+            >
               Dashboard
-            </Button>
-            <Button component={Link} to="/Attendance" className={classes.navButton}>
-                          Attendance
-                        </Button>
-            <Button className={classes.navButton}>Update</Button>
-            <Button className={classes.navButton}>Report</Button>
+            </Typography>
+            <Typography
+              variant="body1"
+              component={Link}
+              to="/Attendance"
+              className={classes.navButton}
+              style={{ marginLeft: '16px', fontFamily: 'Poppins' }}
+            >
+              Attendance
+            </Typography>
+            <Typography variant="body1" className={classes.navButton} style={{fontFamily: 'Poppins' }}>
+              Substitute
+            </Typography>
+            <Typography variant="body1" className={classes.navButton} style={{fontFamily: 'Poppins' }}>
+              Report
+            </Typography>
           </div>
           <div className={classes.searchContainer}>
             <SearchIcon className={classes.searchIcon} />
@@ -182,7 +205,7 @@ const Header = () => {
           </div>
         </div>
       </Toolbar>
-    </AppBar>
+    </div>
   );
 };
 
