@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useNavigate } from 'react-router-dom';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
@@ -8,16 +9,27 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
-import logo from "../../images/logo.png";
-import downArrow from "../../images/downArrow.png";
-import profilePic from "../../images/profilePic.jpeg";
+import logo from "../../../images/logo.png";
+import downArrow from "../../../images/downArrow.png";
+import profilePic from "../../../images/profilePic.jpeg";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: '#0F1E23',
     height: 80,
     borderBottom: `1px solid #2C3537`,
+    display: '100v', // Add this to make the header flex container
+    alignItems: 'center', // Add this to vertically center the content
+    padding: theme.spacing(0, 2),
+    justifyContent: 'space-between',
   },
+  fixedHeader: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: 1000, // You can adjust the z-index as needed
+    },
   headerContent: {
     display: 'flex',
     alignItems: 'center',
@@ -27,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     display: 'flex',
     alignItems: 'center',
-    marginRight: theme.spacing(4)
+
   },
   logo: {
     width: 30,
@@ -38,25 +50,20 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Poppins',
     fontWeight: 'bold',
     flex: 1,
-    fontWeight: 'light',
-    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
 navButtons: {
-  display: 'flex',
-  alignItems: 'center',
-  fontFamily: 'Poppins',
-  fontWeight: 'bold',
-  marginRight: theme.spacing(2),
-  '& > *:not(:last-child)': {
-    marginRight: theme.spacing(2),
+    display: 'flex',
+    alignItems: 'center',
+    fontFamily: 'Poppins',
+    fontWeight: 'bold',
+    '& > *:not(:last-child)': {
+      marginLeft: theme.spacing(2),
+      [theme.breakpoints.up('md')]: {
+        marginLeft: theme.spacing(1),
+      },
+    },
   },
-  '& > *:nth-child(3)': {
-    marginLeft: theme.spacing(2),
-  },
-   '& > *:last-child': {
-     marginLeft: theme.spacing(2), // Add spacing to the last button
-   },
-},
 
   navButton: {
     textTransform: 'none',
@@ -71,7 +78,7 @@ navButtons: {
       position: 'absolute',
       width: '100%',
       height: '4px',
-      bottom: '-36px',
+      bottom: '-34px',
       backgroundColor: '#F47458',
       left: 0,
       opacity: 0,
@@ -129,9 +136,10 @@ navButtons: {
   },
 }));
 
-const Header = () => {
+const TeacherHeader = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -140,6 +148,13 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+      // Add the code here to handle the logout process if needed
+      // For example, clear user session, log out from the backend, etc.
+      // After the logout process is complete, navigate the user to the '/' page
+      navigate('/');
+    };
 
   return (
     <div className={classes.appBar}>
@@ -155,27 +170,40 @@ const Header = () => {
             <Typography
               variant="body1"
               component={Link}
-              to="/"
+              to="/TeacherDashboard"
               className={classes.navButton}
-              style={{ marginLeft: '16px', fontFamily: 'Poppins' }}
+              style={{  fontFamily: 'Poppins' }}
             >
               Dashboard
             </Typography>
             <Typography
-              variant="body1"
-              component={Link}
-              to="/Attendance"
-              className={classes.navButton}
-              style={{ marginLeft: '16px', fontFamily: 'Poppins' }}
-            >
-              Attendance
+               variant="body1"
+               component={Link}
+               to="/Attendance"
+               className={classes.navButton}
+               style={{  fontFamily: 'Poppins' }}
+               >
+               Attendance
             </Typography>
-            <Typography variant="body1" className={classes.navButton} style={{fontFamily: 'Poppins' }}>
-              Substitute
+            <Typography
+               variant="body1"
+               component={Link}
+               to="/TeacherReport"
+               className={classes.navButton}
+               style={{ fontFamily: 'Poppins' }}
+               >
+               Report
             </Typography>
-            <Typography variant="body1" className={classes.navButton} style={{fontFamily: 'Poppins' }}>
-              Report
+            <Typography
+               variant="body1"
+               component={Link}
+               to="/Substitute"
+               className={classes.navButton}
+               style={{  fontFamily: 'Poppins' }}
+               >
+               Substitute
             </Typography>
+
           </div>
           <div className={classes.searchContainer}>
             <SearchIcon className={classes.searchIcon} />
@@ -183,25 +211,21 @@ const Header = () => {
           </div>
           <div className={classes.profileContainer}>
             <Avatar src={profilePic} alt="Profile" className={classes.profilePic} />
-            <Typography variant="body2" style={{ marginRight: '8px', color: '#fff' }}>
+            <Typography variant="body2" style={{ marginRight: '8px', color: '#fff', marginLeft:'8px' }}>
               Rachel Baker
             </Typography>
-            <IconButton className={classes.dropdownButton} onClick={handleClick}>
-              <img
-                src={downArrow}
-                alt="Dropdown"
-                className={classes.downArrowIcon}
-              />
-            </IconButton>
-            <Menu
-              id="dropdown-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+      <IconButton className={classes.dropdownButton} onClick={handleClick}>
+        <img src={downArrow} alt="Dropdown" className={classes.downArrowIcon} />
+      </IconButton>
+      <Menu
+        id="dropdown-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      </Menu>
           </div>
         </div>
       </Toolbar>
@@ -209,4 +233,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default TeacherHeader;

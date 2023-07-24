@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import profilePic from '../../images/profilePic.jpeg';
+import profilePic from '../../../images/profilePic.jpeg';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import classIcon from '../../images/classicon.png';
+import classIcon from '../../../images/classicon.png';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import userPic from '../../images/user.png';
+import userPic from '../../../images/user.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,17 +20,18 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     padding: theme.spacing(2),
   },
-  profileContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(4),
-  },
-  profilePic: {
-    width: '60px !important',
-    height: '60px !important',
-    borderRadius: '50%',
-    marginRight: theme.spacing(2),
-  },
+   profileContainer: {
+     display: 'flex',
+     alignItems: 'center',
+     marginBottom: theme.spacing(4),
+     marginLeft: theme.spacing(4),
+   },
+   profilePic: {
+     width: theme.spacing(8),
+     height: theme.spacing(8),
+     borderRadius: '50%',
+     marginRight: theme.spacing(2),
+   },
   greetings: {
     fontFamily: 'Poppins',
     fontSize: 30,
@@ -301,6 +302,7 @@ const filteredNotificationsData = notificationsData.filter(
 );
   return (
     <div className={classes.root}>
+    <div style={{ marginTop: '80px' }}> {/* Add margin or padding to ensure content below the header */}
       <div className={classes.profileContainer}>
         <Avatar src={profilePic} alt="Profile Picture" className={classes.profilePic} />
         <div>
@@ -402,6 +404,7 @@ const filteredNotificationsData = notificationsData.filter(
             ))}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
