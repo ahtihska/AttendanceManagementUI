@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import profilePic from '../../../images/profilePic.jpeg';
+import teacherProfile from '../../../images/teacherProfile.jpeg';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import classIcon from '../../../images/classicon.png';
@@ -16,7 +16,7 @@ import userPic from '../../../images/user.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#0F1E23',
+//     backgroundColor: '#0F1E23',
     color: '#fff',
     padding: theme.spacing(2),
   },
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
      marginRight: theme.spacing(2),
    },
   greetings: {
+    color:'black',
     fontFamily: 'Poppins',
     fontSize: 30,
     fontWeight: 'medium',
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     fontSize: 13,
+    color: 'black',
     fontFamily: 'Poppins',
     fontWeight: 'light',
   },
@@ -55,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     borderRadius: '10px',
     overflow: 'hidden',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
   boxHeading: {
     position: 'sticky',
@@ -75,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     borderRadius: '10px',
     overflow: 'hidden',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
   today: {
     backgroundColor: '#F47458',
@@ -302,9 +306,9 @@ const filteredNotificationsData = notificationsData.filter(
 );
   return (
     <div className={classes.root}>
-    <div style={{ marginTop: '80px' }}> {/* Add margin or padding to ensure content below the header */}
+    <div style={{ marginTop: '20px' }}> {/* Add margin or padding to ensure content below the header */}
       <div className={classes.profileContainer}>
-        <Avatar src={profilePic} alt="Profile Picture" className={classes.profilePic} />
+        <Avatar src={teacherProfile} alt="Profile Picture" className={classes.profilePic} />
         <div>
           <Typography variant="h4" className={classes.greetings} style={{fontFamily: 'Poppins', fontWeight: 500, fontSize: 30}}>
             Hey Rachel!

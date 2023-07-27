@@ -3,13 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#0F1E23',
+//     backgroundColor: '#0F1E23',
     minHeight: '100vh',
-    color: '#fff',
+    color: '#000',
   },
 }));
 
-const Report = () => {
+const StudentReport = () => {
   const classes = useStyles();
 
   return (
@@ -20,4 +20,4 @@ const Report = () => {
   );
 };
 
-export default Report;
+export default StudentReport;

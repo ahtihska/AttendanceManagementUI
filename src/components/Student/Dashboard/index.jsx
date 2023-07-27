@@ -10,7 +10,7 @@ import Calendar from 'react-calendar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#0F1E23',
+//     backgroundColor: '#0F1E23',
     color: '#fff',
     padding: theme.spacing(2),
   },
@@ -28,65 +28,70 @@ const useStyles = makeStyles((theme) => ({
   },
   greetings: {
     fontFamily: 'Poppins',
+    color: 'black', // Set the font color to black
     fontSize: 30,
     fontWeight: 'medium',
     marginBottom: theme.spacing(1),
   },
   message: {
     fontSize: 13,
+    color: 'black',
     fontFamily: 'Poppins',
     fontWeight: 'light',
   },
   bodyContainer: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(3),
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(3),
+  },
+  bigBox: {
+    flexBasis: 'calc(33.33% - 10px)',
+    height: '350px',
+    backgroundColor: '#fff',
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(1),
+    borderRadius: '10px',
+    overflow: 'auto',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  },
+  regularBox: {
+    flexBasis: 'calc(33.33% - 10px)',
+    height: '350px',
+    backgroundColor: '#fff',
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(1),
+    borderRadius: '10px',
+    overflow: 'auto',
+    scrollbarColor: 'transparent transparent',
+    '&::-webkit-scrollbar': {
+      width: 6,
     },
-    bigBox: {
-      flexBasis: 'calc(33.33% - 10px)', // Change the flex basis to fit 3 boxes in a row
-      height: '350px',
-      backgroundColor: '#fff',
-      marginBottom: theme.spacing(2),
-      marginLeft: theme.spacing(1),
-      borderRadius: '10px',
-      overflow: 'auto',
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0, 0, 0, 0.2)',
+      borderRadius: 3,
     },
-    regularBox: {
-      flexBasis: 'calc(33.33% - 10px)', // Change the flex basis to fit 3 boxes in a row
-      height: '350px',
-      backgroundColor: '#fff',
-      marginBottom: theme.spacing(2),
-      marginLeft: theme.spacing(1),
-      borderRadius: '10px',
-      overflow: 'auto',
-      scrollbarColor: 'transparent transparent',
-      '&::-webkit-scrollbar': {
-        width: 6,
-      },
-      '&::-webkit-scrollbar-thumb': {
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        borderRadius: 3,
-      },
-      '&::-webkit-scrollbar-track': {
-        backgroundColor: 'transparent',
-      },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'transparent',
     },
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  },
   smallBox: {
-      width: 'calc(25% - 10px)',
-      height: '150px',
-      backgroundColor: '#fff',
-      marginBottom: theme.spacing(2),
-      marginLeft : theme.spacing(1),
-      borderRadius: '10px',
-      overflow: 'auto'
-    },
+    width: 'calc(25% - 10px)',
+    height: '150px',
+    backgroundColor: '#fff',
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(1),
+    borderRadius: '10px',
+    overflow: 'auto',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  },
   teacher: {
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(5),
   },
-  summaryContainer:{
+  summaryContainer: {
     display: 'flex',
     alignItems: 'center',
     margin: theme.spacing(6),
@@ -94,81 +99,80 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   summaryPic: {
-      width: theme.spacing(9),
-      height: theme.spacing(11),
-      borderRadius: '10%',
-      marginRight: theme.spacing(1),
+    width: theme.spacing(9),
+    height: theme.spacing(11),
+    borderRadius: '10%',
+    marginRight: theme.spacing(1),
   },
   boldContent: {
-      fontFamily: 'Poppins',
-      fontWeight: 'Bold',
-      color: 'black',
-    },
-  fadedContent:{
-      fontFamily: 'Poppins',
-      opacity:0.5,
-      color: 'black',
+    fontFamily: 'Poppins',
+    fontWeight: 'Bold',
+    color: 'black',
   },
-  notification:{
-        fontFamily: 'Poppins',
-        fontSize : 11,
-        color: 'black',
-     marginTop: theme.spacing(1),
+  fadedContent: {
+    fontFamily: 'Poppins',
+    opacity: 0.5,
+    color: 'black',
   },
-  notificationContainer:{
-     display: 'flex',
-     alignItems: 'left',
-     margin: theme.spacing(3),
+  notification: {
+    fontFamily: 'Poppins',
+    fontSize: 11,
+    color: 'black',
+    marginTop: theme.spacing(1),
+  },
+  notificationContainer: {
+    display: 'flex',
+    alignItems: 'left',
+    margin: theme.spacing(3),
   },
   chartContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '380px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '380px',
   },
   calenderContainer: {
-        width: '100%',
-        height: 'calc(100% - 60px)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+    width: '100%',
+    height: 'calc(100% - 60px)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   tileHeadings: {
-          fontSize: 20,
-          fontFamily: 'Poppins',
-          fontWeight: 700,
-          position: 'absolute',
-          color: 'black',
-          padding: '20px',
+    fontSize: 20,
+    fontFamily: 'Poppins',
+    fontWeight: 700,
+    position: 'absolute',
+    color: 'black',
+    padding: '20px',
   },
-  heading:{
+  heading: {
     fontFamily: 'Poppins',
     fontWeight: 'Bold',
     color: 'black',
     fontSize: 26,
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   clearButton: {
-      backgroundColor: '#F47458',
-      color: 'white', // Change the text color to your desired color
-      marginLeft: theme.spacing(1),
-      float :'right',
-      '&:hover': {
-            backgroundColor: '#F57458', // Change the hover background color to your desired color
-          },
-      fontSize: 11,
-      width : '100px',
-      height: '20px',
+    backgroundColor: '#4150B7',
+    color: 'white',
+    marginLeft: theme.spacing(1),
+    float: 'right',
+    '&:hover': {
+      backgroundColor: '#F57458',
     },
+    fontSize: 11,
+    width: '100px',
+    height: '20px',
+  },
   calendarContainer: {
-      width: '100%',
-      height: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      border: 'none',
-    },
-
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: 'none',
+  },
 }));
 const Dashboard = () => {
   const classes = useStyles();
@@ -187,7 +191,7 @@ const Dashboard = () => {
 
   const data = [
         { id: 0, value: 10, label: 'Absent', color: '#000000' },
-        { id: 1, value: 40, label: 'Present', color: '#F47458' },
+        { id: 1, value: 40, label: 'Present', color: '#4150B7' },
       ];
 
   const total = data.reduce((sum, item) => sum + item.value, 0);
@@ -214,11 +218,11 @@ const Dashboard = () => {
       </Grid>
       <Grid item>
         <div className={classes.teacher}>
-          <Typography variant="body1" className={classes.message} style={{fontSize: 18}}>
-            Assigned to: <span style={{color: '#F47458'}}> Ms. Rachel Baker </span>
+          <Typography variant="body1" className={classes.message} style={{ fontSize: 18 }}>
+            Assigned to: <span style={{ color: '#4150B7', textDecoration: 'underline' }}>Ms. Rachel Baker</span>
           </Typography>
           <Typography align = 'right' variant="body1" className={classes.message} style={{fontSize: 18,}}>
-              Class <span style={{color: '#F47458'}}> X A </span>
+              Class <span style={{color: '#4150B7', textDecoration: 'underline'}}> X A </span>
           </Typography>
         </div>
       </Grid>

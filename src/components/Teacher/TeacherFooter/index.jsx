@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#0F1E23',
+//     backgroundColor: '#0F1E23',
     minHeight: '100vh', // Set minimum height to fill the entire viewport
   },
   footer: {
-    backgroundColor: '#0F1E23',
+//     backgroundColor: '#0F1E23',
     color: '#fff',
     padding: theme.spacing(2),
   },

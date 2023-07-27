@@ -17,7 +17,7 @@ import profilePic from "../../../images/profilePic.jpeg";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    backgroundColor: '#0F1E23',
+//     backgroundColor: '#0F1E23',
     height: 80,
     borderBottom: `1px solid #2C3537`,
   },
