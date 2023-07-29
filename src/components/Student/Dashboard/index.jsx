@@ -156,13 +156,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 26,
     marginBottom: theme.spacing(2),
   },
+    today: {
+      backgroundColor: '#4150B7',
+      color: '#fff',
+    },
   clearButton: {
     backgroundColor: '#4150B7',
     color: 'white',
     marginLeft: theme.spacing(1),
     float: 'right',
     '&:hover': {
-      backgroundColor: '#F57458',
+      backgroundColor: '#fff',
+      color: 'black'
     },
     fontSize: 11,
     width: '100px',

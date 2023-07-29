@@ -15,6 +15,7 @@ import logo from "../../../images/logo.png";
 import downArrow from "../../../images/downArrow.png";
 import teacherProfile from "../../../images/teacherProfile.jpeg";
 import axios from 'axios';
+import userPic from "../../../images/user.png";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -186,7 +187,7 @@ const TeacherHeader = () => {
             <input type="text" placeholder="Search" className={classes.searchInput} />
           </div>
           <div className={classes.profileContainer}>
-            <Avatar src={teacherProfile} alt="Profile" className={classes.profilePic} />
+            <Avatar src={userPic} ealt="Profile" className={classes.profilePic} />
             <Typography variant="body2" style={{ marginRight: '8px', color: '#fff' }}>
               {firstName} {lastName}
             </Typography>
