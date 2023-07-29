@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +15,9 @@ import { Link } from 'react-router-dom';
 import logo from "../../../images/logo.png";
 import downArrow from "../../../images/downArrow.png";
 import profilePic from "../../../images/profilePic.jpeg";
+import { useState, useEffect } from 'react';
+import userPic from "../../../images/user.png";
+
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -125,12 +129,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StudentHeader = () => {
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -142,6 +148,23 @@ const StudentHeader = () => {
         // After the logout process is complete, navigate the user to the '/' page
         navigate('/');
       };
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+
+
+    useEffect(() => {
+      axios.get('http://localhost:8086/students/id/1')
+        .then((response) => {
+          const { firstName, lastName } = response.data;
+          setFirstName(firstName);
+          setLastName(lastName);
+        })
+        .catch((error) => {
+          // Handle error, e.g., display a message or take appropriate action
+          console.error('Error fetching student data:', error);
+        });
+    }, []);
+
 
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -169,9 +192,9 @@ const StudentHeader = () => {
             <input type="text" placeholder="Search" className={classes.searchInput} />
           </div>
           <div className={classes.profileContainer}>
-            <Avatar src={profilePic} alt="Profile" className={classes.profilePic} />
+            <Avatar src={userPic} alt="Profile" className={classes.profilePic} />
             <Typography variant="body2" style={{ marginRight: '8px', color: '#fff' }}>
-              Bryan Addams
+              {`${firstName} ${lastName}`}
             </Typography>
          <IconButton className={classes.dropdownButton} onClick={handleClick}>
             <img src={downArrow} alt="Dropdown" className={classes.downArrowIcon} />

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, {useEffect } from 'react';
+import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -198,14 +200,38 @@ const Dashboard = () => {
     }
     return '';
   };
+  const [classIds, setClassIds] = useState([]);
 
-  // Sample class data from the backend
-  const classData = [
-    { id: 1, name: 'X A', total: 45, icon: classIcon, substituted: false, },
-    { id: 2, name: 'X B', total: 30, icon: classIcon, substituted: true, date: '2023-07-18', substitute: 'John Doe' },
-    { id: 3, name: 'X C', total: 50, icon: classIcon, substituted: true, date: '2023-07-19', substitute: 'Jane Smith' },
-    // Add more class entries as needed
-  ];
+    useEffect(() => {
+      // Fetch teacher data from the backend
+      axios.get('http://localhost:8086/teachers/id/5001')
+        .then(response => {
+          const data = response.data;
+          const extractedClassIds = data.map(teacher => teacher.classId);
+          setClassIds(extractedClassIds);
+        })
+        .catch(error => {
+          console.error('Error fetching teacher data:', error);
+        });
+    }, []);
+
+  const [teacherData, setTeacherData] = useState(null);
+
+    useEffect(() => {
+      // Fetch teacher data from the backend
+      axios.get('http://localhost:8086/teachers/id/5001')
+        .then(response => {
+          setTeacherData(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching teacher data:', error);
+        });
+    }, []);
+
+    const firstName = teacherData ? teacherData[0].firstName : '';
+
+
+
 
   const [notificationsData, setNotificationsData] = useState([
     {
@@ -311,7 +337,7 @@ const filteredNotificationsData = notificationsData.filter(
         <Avatar src={teacherProfile} alt="Profile Picture" className={classes.profilePic} />
         <div>
           <Typography variant="h4" className={classes.greetings} style={{fontFamily: 'Poppins', fontWeight: 500, fontSize: 30}}>
-            Hey Rachel!
+            Hey {firstName}!
           </Typography>
           <Typography variant="body1" className={classes.message} style={{fontFamily: 'Poppins', fontWeight: 300, fontSize: 15}}>
             We hope you have a nice day.
@@ -333,44 +359,28 @@ const filteredNotificationsData = notificationsData.filter(
             </div>
           </div>
         </div>
-        <div className={classes.regularBox}>
-          <Typography
-            variant="h5"
-            className={classes.boxHeading}
-            style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
-          >
-            Assigned Classes
-          </Typography>
-          <div className={classes.boxContent}>
-            <div className={classes.scrollContainer}>
-              {classData.map((classItem) => (
-                <div key={classItem.id} className={classes.classItem}>
-                  <Avatar className={classes.classIcon} src={classItem.icon} alt="Class Icon" />
-                  <div>
-                    <Typography variant="body1" className={classes.className} style={{ fontWeight: 700, fontSize: 20 }}>
-                      {classItem.name}
-                    </Typography>
-                    <div className={classes.classDetails}>
-                      <Typography variant="body2" className={classes.classTotal}>
-                        Total: {classItem.total}
-                      </Typography>
-                      {classItem.substituted && (
-                        <div>
-                          <Typography variant="body2" className={classes.classSubstituted} style={{color: '#F47458',}}>
-                            Substituted: {classItem.substitute}
-                          </Typography>
-                          <Typography variant="body2" className={classes.classDate}>
-                            Date: {classItem.date}
+         <div className={classes.regularBox}>
+                  <Typography
+                    variant="h5"
+                    className={classes.boxHeading}
+                    style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
+                  >
+                    Assigned Classes
+                  </Typography>
+                  <div className={classes.boxContent}>
+                    <div className={classes.scrollContainer}>
+                      {/* Render the list of classIds */}
+                      {classIds.map(classId => (
+                        <div key={classId} className={classes.classItem}>
+                          <Avatar src={classIcon} alt="Class Icon" className={classes.classIcon} />
+                          <Typography variant="body1" className={classes.className}>
+                            {classId}
                           </Typography>
                         </div>
-                      )}
+                      ))}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
         <div className={classes.regularBox}>
           <Typography
             variant="h5"

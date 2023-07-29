@@ -235,7 +235,7 @@ const Report = () => {
 
   const data = [
         { id: 0, value: 10, label: 'Absent', color: '#000000' },
-        { id: 1, value: 40, label: 'Present', color: '#F47458' },
+        { id: 1, value: 40, label: 'Present', color: '#4150B7' },
       ];
 
   const total = data.reduce((sum, item) => sum + item.value, 0);

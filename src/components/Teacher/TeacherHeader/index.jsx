@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import logo from "../../../images/logo.png";
 import downArrow from "../../../images/downArrow.png";
 import teacherProfile from "../../../images/teacherProfile.jpeg";
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -124,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StudentHeader = () => {
+const TeacherHeader = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
@@ -142,6 +143,21 @@ const StudentHeader = () => {
         // After the logout process is complete, navigate the user to the '/' page
         navigate('/');
       };
+    const [teacherData, setTeacherData] = useState(null);
+
+       useEffect(() => {
+         // Fetch teacher data from the backend
+         axios.get('http://localhost:8086/teachers/id/5001')
+           .then(response => {
+             setTeacherData(response.data);
+           })
+           .catch(error => {
+             console.error('Error fetching teacher data:', error);
+           });
+       }, []);
+
+       const firstName = teacherData ? teacherData[0].firstName : '';
+       const lastName = teacherData ? teacherData[0].lastName : '';
 
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -172,7 +188,7 @@ const StudentHeader = () => {
           <div className={classes.profileContainer}>
             <Avatar src={teacherProfile} alt="Profile" className={classes.profilePic} />
             <Typography variant="body2" style={{ marginRight: '8px', color: '#fff' }}>
-              Rachel Baker
+              {firstName} {lastName}
             </Typography>
          <IconButton className={classes.dropdownButton} onClick={handleClick}>
             <img src={downArrow} alt="Dropdown" className={classes.downArrowIcon} />
@@ -193,4 +209,4 @@ const StudentHeader = () => {
   );
 };
 
-export default StudentHeader;
+export default TeacherHeader;

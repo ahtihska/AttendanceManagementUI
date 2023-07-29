@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +8,8 @@ import { Grid, Button } from '@material-ui/core';
 import percentagePic from "../../../images/percentagePic.jpeg";
 import { PieChart } from '@mui/x-charts/PieChart';
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import userPic from '../../../images/user.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -188,6 +191,48 @@ const Dashboard = () => {
   const handleClearAll = () => {
     setShowNotifications(false);
   };
+  const [studentName, setStudentName] = useState('');
+  const [teacherName, setTeacherName] = useState('');
+  const [classID, setClassID] = useState('');
+
+    useEffect(() => {
+      // Fetch student data
+      axios
+        .get('http://localhost:8086/students/id/1')
+        .then((response) => {
+          if (response.data) {
+            setStudentName(response.data.firstName);
+            setClassID(response.data.classId);
+
+            const teacherId = response.data.teacherId;
+
+            // Fetch teacher data using teacherId from student data
+            axios
+              .get(`http://localhost:8086/teachers/id/${teacherId}`)
+              .then((teacherResponse) => {
+                if (teacherResponse.data && teacherResponse.data.length > 0) {
+                  const teacherData = teacherResponse.data[0]; // Select the first teacher from the response array
+                  const { firstName, lastName } = teacherData;
+                  setTeacherName(`${firstName} ${lastName}`);
+                } else {
+                  setTeacherName('No Teacher Found');
+                }
+              })
+              .catch((error) => {
+                console.error('Error fetching teacher data:', error);
+                setTeacherName('Error fetching data');
+              });
+          } else {
+            setStudentName('No Student Found');
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching student data:', error);
+          setStudentName('Error fetching data');
+        });
+    }, []);
+
+
 
   const data = [
         { id: 0, value: 10, label: 'Absent', color: '#000000' },
@@ -198,31 +243,32 @@ const Dashboard = () => {
 
   return (
     <div className={classes.root}>
-    <Grid container justify="space-between">
-      <Grid item>
-        <div className={classes.profileContainer}>
+      <Grid container justify="space-between">
+        <Grid item>
+          <div className={classes.profileContainer}>
             <Avatar
-              src={profilePic}
+              src={userPic}
               alt="Profile Picture"
               className={classes.profilePic}
             />
             <div>
+              {/* Display the student's name */}
               <Typography variant="h4" className={classes.greetings}>
-                Hey Bryan!
+                Hey {studentName}!
               </Typography>
               <Typography variant="body1" className={classes.message}>
                 We hope you have a nice day.
               </Typography>
             </div>
           </div>
-      </Grid>
+        </Grid>
       <Grid item>
         <div className={classes.teacher}>
           <Typography variant="body1" className={classes.message} style={{ fontSize: 18 }}>
-            Assigned to: <span style={{ color: '#4150B7', textDecoration: 'underline' }}>Ms. Rachel Baker</span>
+            Assigned to: <span style={{ color: '#4150B7', textDecoration: 'underline' }}>{teacherName}</span>
           </Typography>
           <Typography align = 'right' variant="body1" className={classes.message} style={{fontSize: 18,}}>
-              Class <span style={{color: '#4150B7', textDecoration: 'underline'}}> X A </span>
+              Class <span style={{color: '#4150B7', textDecoration: 'underline'}}>{classID} </span>
           </Typography>
         </div>
       </Grid>
