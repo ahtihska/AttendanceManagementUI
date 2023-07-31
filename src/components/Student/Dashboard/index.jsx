@@ -156,13 +156,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 26,
     marginBottom: theme.spacing(2),
   },
+    today: {
+      backgroundColor: '#4150B7',
+      color: '#fff',
+    },
   clearButton: {
     backgroundColor: '#4150B7',
     color: 'white',
     marginLeft: theme.spacing(1),
     float: 'right',
     '&:hover': {
-      backgroundColor: '#F57458',
+      backgroundColor: '#fff',
+      color: 'black'
     },
     fontSize: 11,
     width: '100px',
@@ -180,6 +185,7 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
   const classes = useStyles();
   const currentDate = new Date();
+  const formattedEndDate = currentDate.toISOString().split('T')[0];
     const tileClassName = ({ date }) => {
       if (date.toDateString() === currentDate.toDateString()) {
         return `${classes.today} react-calendar__tile--today`;
@@ -191,53 +197,81 @@ const Dashboard = () => {
   const handleClearAll = () => {
     setShowNotifications(false);
   };
-  const [studentName, setStudentName] = useState('');
-  const [teacherName, setTeacherName] = useState('');
-  const [classID, setClassID] = useState('');
+const [studentName, setStudentName] = useState('');
+const [teacherName, setTeacherName] = useState('');
+const [classID, setClassID] = useState('');
+const [attendanceData, setAttendanceData] = useState([]);
 
-    useEffect(() => {
-      // Fetch student data
-      axios
-        .get('http://localhost:8086/students/id/1')
+useEffect(() => {
+  // Fetch student data
+  axios
+    .get('http://localhost:8086/students/id/1')
+    .then((response) => {
+      if (response.data) {
+        setStudentName(response.data.firstName);
+        setClassID(response.data.classId);
+
+        const teacherId = response.data.teacherId;
+
+        // Fetch teacher data using teacherId from student data
+        axios
+          .get(`http://localhost:8086/teachers/id/${teacherId}`)
+          .then((teacherResponse) => {
+            if (teacherResponse.data && teacherResponse.data.length > 0) {
+              const teacherData = teacherResponse.data[0]; // Select the first teacher from the response array
+              const { firstName, lastName } = teacherData;
+              setTeacherName(`${firstName} ${lastName}`);
+            } else {
+              setTeacherName('No Teacher Found');
+            }
+          })
+          .catch((error) => {
+            console.error('Error fetching teacher data:', error);
+            setTeacherName('Error fetching data');
+          });
+      } else {
+        setStudentName('No Student Found');
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching student data:', error);
+      setStudentName('Error fetching data');
+    });
+
+  // Now fetch the attendance percentage using the API
+  axios
+        .get(`http://localhost:8080/api/v1/attendance/students?studentId=1&startdate=2023-07-01&enddate=${formattedEndDate}`)
         .then((response) => {
           if (response.data) {
-            setStudentName(response.data.firstName);
-            setClassID(response.data.classId);
-
-            const teacherId = response.data.teacherId;
-
-            // Fetch teacher data using teacherId from student data
-            axios
-              .get(`http://localhost:8086/teachers/id/${teacherId}`)
-              .then((teacherResponse) => {
-                if (teacherResponse.data && teacherResponse.data.length > 0) {
-                  const teacherData = teacherResponse.data[0]; // Select the first teacher from the response array
-                  const { firstName, lastName } = teacherData;
-                  setTeacherName(`${firstName} ${lastName}`);
-                } else {
-                  setTeacherName('No Teacher Found');
-                }
-              })
-              .catch((error) => {
-                console.error('Error fetching teacher data:', error);
-                setTeacherName('Error fetching data');
-              });
+            setAttendanceData(response.data);
           } else {
-            setStudentName('No Student Found');
+            // Handle case when attendance data is not available
+            setAttendanceData([]);
           }
         })
         .catch((error) => {
-          console.error('Error fetching student data:', error);
-          setStudentName('Error fetching data');
+          console.error('Error fetching attendance data:', error);
+          // Handle error case
+          setAttendanceData([]);
         });
-    }, []);
+
+}, []);
+
+  // Calculate presentCount, absentCount, totalCount, and attendancePercentage
+   const presentCount = attendanceData.filter((item) => item.present).length;
+   const absentCount = attendanceData.filter((item) => !item.present).length;
+   const totalCount = attendanceData.length;
+   const attendancePercentage = totalCount > 0 ? (presentCount / totalCount) * 100 : 0;
+   const absentPercentage = 100 - attendancePercentage;
+   const roundedAttendancePercentage = Math.round(attendancePercentage);
+   const roundedAbsentPercentage = Math.round(absentPercentage);
 
 
 
   const data = [
-        { id: 0, value: 10, label: 'Absent', color: '#000000' },
-        { id: 1, value: 40, label: 'Present', color: '#4150B7' },
-      ];
+      { id: 0, value: absentCount, label: `Absent (${roundedAbsentPercentage}%)`, color: '#000000' },
+      { id: 1, value: presentCount, label: `Present (${roundedAttendancePercentage}%)`, color: '#4150B7' },
+    ];
 
   const total = data.reduce((sum, item) => sum + item.value, 0);
 
@@ -283,7 +317,7 @@ const Dashboard = () => {
                 />
                 <div>
                   <Typography variant="h4" className={classes.boldContent} style = {{fontSize: 30}}>
-                    80%
+                   {roundedAttendancePercentage}%
                   </Typography>
                   <Typography variant="body1" className={classes.fadedContent} style = {{fontSize: 11}}>
                     ATTENDANCE PERCENTAGE
@@ -300,7 +334,7 @@ const Dashboard = () => {
             />
             <div>
               <Typography variant="h4" className={classes.boldContent} style = {{fontSize: 30}}>
-                50
+                {totalCount}
               </Typography>
               <Typography variant="body1" className={classes.fadedContent} style = {{fontSize: 11}}>
                 TOTAL CLASSES
@@ -317,7 +351,7 @@ const Dashboard = () => {
                 />
                 <div>
                   <Typography variant="h4" className={classes.boldContent} style = {{fontSize: 30}}>
-                    40
+                    {presentCount}
                   </Typography>
                   <Typography variant="body1" className={classes.fadedContent} style = {{fontSize: 11}}>
                     CLASSES ATTENDED
@@ -334,7 +368,7 @@ const Dashboard = () => {
                 />
                 <div>
                   <Typography variant="h4" className={classes.boldContent} style = {{fontSize: 30}}>
-                    10
+                    {absentCount}
                   </Typography>
                   <Typography variant="body1" className={classes.fadedContent} style = {{fontSize: 11}}>
                     CLASSES UNATTENDED
