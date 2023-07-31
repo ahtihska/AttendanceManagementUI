@@ -1,0 +1,48 @@
+import React, { Component } from 'react';
+
+
+class Counter extends Component {
+    state = {
+    Attenpercentage : 80,
+    CAttended: 40,
+    TotalC : 50,
+    Leave: 10,
+    
+
+};
+    handleClick = () => {
+        alert("which type of leave do you want to apply for")
+    };
+   
+
+   
+    render() {
+        return (
+            <div>
+                <h1>Student Dashboard</h1>
+                <button >Report</button>
+                <h4>Welcome Sai Madhushree</h4>
+                <h5>Class: X A</h5>
+                <h5>Teacher Assigned: Raechel Paul</h5>
+                <button onClick={this.handleClick}>Apply For Leave</button>
+
+                <h5>Attendance Status</h5>
+                <h4>Attendance Percentage</h4>
+                <span className="badge badge-primary m-80">{this.state.Attenpercentage}</span>
+                <h4>Total Classes</h4>
+                <span className="badge badge-primary m-80">{this.state.TotalC}</span>
+                <h4>Classes Present</h4>
+                <span className="badge badge-primary m-80">{this.state.CAttended}</span>
+                <h4>Leave Taken</h4>
+                <span className="badge badge-primary m-80">{this.state.Leave}</span>
+
+                
+
+                
+               
+                
+            </div>
+        );
+    }
+}
+export default Counter;
