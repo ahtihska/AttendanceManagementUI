@@ -14,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
 import logo from "../../../images/logo.png";
 import downArrow from "../../../images/downArrow.png";
-import profilePic from "../../../images/profilePic.jpeg";
+
 import { useState, useEffect } from 'react';
 import userPic from "../../../images/user.png";
 

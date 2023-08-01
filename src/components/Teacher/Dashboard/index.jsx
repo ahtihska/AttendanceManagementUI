@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import teacherProfile from '../../../images/teacherProfile.jpeg';
+
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import classIcon from '../../../images/classicon.png';

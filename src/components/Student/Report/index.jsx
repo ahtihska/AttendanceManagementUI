@@ -19,6 +19,11 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import { addDays } from 'date-fns';
+import totalPic from '../../../images/total.png';
+import absent from '../../../images/absent.png';
+import present from '../../../images/present.png';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -252,7 +257,7 @@ const Report = () => {
     if (!isInitialRender && startDate && endDate) {
       // Convert startDate and endDate to ISO date strings
       const formattedStartDate = startDate.toISOString().split('T')[0];
-      const formattedEndDate = endDate.toISOString().split('T')[0];
+        const formattedEndDate = addDays(endDate, 1).toISOString().split('T')[0]; // Add one day to endDate
 
       axios
         .get(`http://localhost:8080/api/v1/attendance/students?studentId=1&startdate=${formattedStartDate}&enddate=${formattedEndDate}`)
@@ -313,7 +318,7 @@ const AbsentTable = ({ AbsentAttendance, absentDays }) => {
         <Typography variant="h6" className={classes.tileHeadings} style={{ flex: 1 }}>
           Absent Days
         </Typography>
-        <div style={{ position: 'relative', top: 0, left: '350px', zIndex: 2}}>
+        <div style={{ position: 'relative', top: 0, left: '550px', zIndex: 2}}>
           <Typography>Total Days: <b>{absentDays}</b></Typography>
         </div>
       </div>
@@ -385,7 +390,7 @@ const AttendanceReport = ({ type, absentDates }) => {
             <div className={classes.smallBox}>
               <div className={classes.summaryContainer}>
                 <Avatar
-                  src={percentagePic}
+                  src={totalPic}
                   alt="Percentage Picture"
                   className={classes.summaryPic}
                 />
@@ -404,7 +409,7 @@ const AttendanceReport = ({ type, absentDates }) => {
             <div className={classes.smallBox}>
               <div className={classes.summaryContainer}>
                 <Avatar
-                  src={percentagePic}
+                  src={present}
                   alt="Percentage Picture"
                   className={classes.summaryPic}
                 />
@@ -423,7 +428,7 @@ const AttendanceReport = ({ type, absentDates }) => {
             <div className={classes.smallBox}>
               <div className={classes.summaryContainer}>
                 <Avatar
-                  src={percentagePic}
+                  src={absent}
                   alt="Percentage Picture"
                   className={classes.summaryPic}
                 />

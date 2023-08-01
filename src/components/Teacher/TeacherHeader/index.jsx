@@ -13,7 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
 import logo from "../../../images/logo.png";
 import downArrow from "../../../images/downArrow.png";
-import teacherProfile from "../../../images/teacherProfile.jpeg";
+
 import axios from 'axios';
 import userPic from "../../../images/user.png";
 

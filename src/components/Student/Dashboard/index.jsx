@@ -3,13 +3,16 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import profilePic from "../../../images/profilePic.jpeg";
+
 import { Grid, Button } from '@material-ui/core';
 import percentagePic from "../../../images/percentagePic.jpeg";
 import { PieChart } from '@mui/x-charts/PieChart';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import userPic from '../../../images/user.png';
+import totalPic from '../../../images/total.png';
+import absent from '../../../images/absent.png';
+import present from '../../../images/present.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,9 +105,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   summaryPic: {
-    width: theme.spacing(9),
-    height: theme.spacing(11),
-    borderRadius: '10%',
+    width: theme.spacing(8),
+    height: theme.spacing(8),
+//     borderRadius: '10%',
     marginRight: theme.spacing(1),
   },
   boldContent: {
@@ -328,7 +331,7 @@ useEffect(() => {
         <div className={classes.smallBox}>
             <div className={classes.summaryContainer}>
             <Avatar
-              src={percentagePic}
+              src={totalPic}
               alt="Percentage Picture"
               className={classes.summaryPic}
             />
@@ -345,7 +348,7 @@ useEffect(() => {
         <div className={classes.smallBox}>
             <div className={classes.summaryContainer}>
                 <Avatar
-                  src={percentagePic}
+                  src={present}
                   alt="Percentage Picture"
                   className={classes.summaryPic}
                 />
@@ -362,7 +365,7 @@ useEffect(() => {
         <div className={classes.smallBox}>
             <div className={classes.summaryContainer}>
                 <Avatar
-                  src={percentagePic}
+                  src={absent}
                   alt="Percentage Picture"
                   className={classes.summaryPic}
                 />
