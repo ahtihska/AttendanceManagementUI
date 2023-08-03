@@ -13,6 +13,7 @@ import TeacherReport from './components/Teacher/Report';
 import Substitute from './components/Teacher/Substitute';
 import StudentReport from './components/Student/Report';
 import Leave from './components/Student/Leave';
+import UpdatePage from './components/Teacher/UpdatePage';
 const Header = () => {
   // Implement your header component here
   return <div></div>;
@@ -71,11 +72,11 @@ const App = () => {
           }
         />
         <Route
-          path="/Substitute"
+          path="/UpdatePage"
           element={
             <>
               <TeacherHeader />
-              <Substitute />
+              <UpdatePage />
 
               <TeacherFooter />
             </>

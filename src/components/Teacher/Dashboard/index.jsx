@@ -1,13 +1,10 @@
-import axios from 'axios';
-import React, {useEffect } from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import classIcon from '../../../images/classicon.png';
+import classIcon from "../../../images/classicon.png";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CheckIcon from '@material-ui/icons/Check';
@@ -15,6 +12,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import userPic from '../../../images/user.png';
+import { useEffect} from 'react';
+import presentation from '../../../images/presentation.png'
+import teachernotification from '../../../images/teachernotification.png'
+import { BACKEND_URL, TEACHER_EMAIL } from '../config'; // Import the BACKEND_URL and TEACHER_EMAIL from the config.js file
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   bigBox: {
     position: 'relative',
     width: 'calc(33.33% - 20px)', // Adjust the width to fit three boxes in one row with spacing
-    height: '500px', // Adjust the height as needed
+    height: '400px', // Adjust the height as needed
     backgroundColor: '#fff',
     marginBottom: theme.spacing(4),
     borderRadius: '10px',
@@ -63,8 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   boxHeading: {
     position: 'sticky',
-    top: '8px',
-    left: '8px',
+    top: 0,
     margin: '8px',
     padding: '0 8px',
     fontFamily: 'Poppins',
@@ -72,10 +73,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#000',
     zIndex: 1,
   },
+
   regularBox: {
     position: 'relative',
     width: 'calc(33.33% - 20px)', // Adjust the width to fit three boxes in one row with spacing
-    height: '500px', // Adjust the height as needed
+    height: '400px', // Adjust the height as needed
     backgroundColor: '#fff',
     marginBottom: theme.spacing(4),
     borderRadius: '10px',
@@ -163,8 +165,8 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: '1px solid #CFCFCF',
   },
   notificationProfilePic: {
-    width: '60px !important',
-    height: '60px !important',
+    width: '40px !important',
+    height: '40px !important',
     marginRight: theme.spacing(2),
     marginLeft: theme.spacing(2),
   },
@@ -173,13 +175,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     color: '#000',
   },
-  calendarContainer: {
+  calenderContainer: {
     width: '100%',
-    height: '100%',
+    height: 'calc(100% - 60px)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    border: 'none',
   },
   approveIcon: {
     color: '#F47458',
@@ -191,6 +192,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
 const Dashboard = () => {
   const classes = useStyles();
   const currentDate = new Date();
@@ -200,36 +204,6 @@ const Dashboard = () => {
     }
     return '';
   };
-  const [classIds, setClassIds] = useState([]);
-
-    useEffect(() => {
-      // Fetch teacher data from the backend
-      axios.get('http://localhost:8086/teachers/id/5001')
-        .then(response => {
-          const data = response.data;
-          const extractedClassIds = data.map(teacher => teacher.classId);
-          setClassIds(extractedClassIds);
-        })
-        .catch(error => {
-          console.error('Error fetching teacher data:', error);
-        });
-    }, []);
-
-  const [teacherData, setTeacherData] = useState(null);
-
-    useEffect(() => {
-      // Fetch teacher data from the backend
-      axios.get('http://localhost:8086/teachers/id/5001')
-        .then(response => {
-          setTeacherData(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching teacher data:', error);
-        });
-    }, []);
-
-    const firstName = teacherData ? teacherData[0].firstName : '';
-
 
 
 
@@ -330,70 +304,167 @@ const handleDecline = (notificationId) => {
 const filteredNotificationsData = notificationsData.filter(
   (notification) => !notification.approved && !notification.declined
 );
+
+
+const [firstName, setFirstName] = useState("");
+const [lastName, setLastName] = useState("");
+const [data, setData] = useState([]); // Add this line to define the 'data' state variable
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/teachers/emailId/${TEACHER_EMAIL}`);
+      const jsonData = await response.json();
+      setData(jsonData);
+
+
+      if (jsonData && jsonData.length > 0) {
+        setFirstName(jsonData[0].firstName);
+        setLastName(jsonData[0].lastName);
+      }
+    } catch (error) {
+      console.error('error fetching data:', error);
+    }
+  };
+  setData([]);
+  fetchData();
+}, []);
+
+
+
+  // Define a state to store the total number of students for each class
+  const [classStudentCounts, setClassStudentCounts] = useState({});
+
+  useEffect(() => {
+    // Fetch the total number of students for each class and store it in the state
+    const fetchStudentCounts = async () => {
+      try {
+        const response = await Promise.all(
+          data.map(async (item) => {
+            const classId = item.classId;
+            const response = await fetch(`${BACKEND_URL}/students/classId/${classId}/studentCount`);
+            const jsonData = await response.json();
+            return { classId, studentCount: jsonData };
+          })
+        );
+
+        // Create a new object with classId as keys and studentCount as values
+        const studentCounts = response.reduce((acc, { classId, studentCount }) => {
+          acc[classId] = studentCount;
+          return acc;
+        }, {});
+
+        setClassStudentCounts(studentCounts);
+      } catch (error) {
+        console.error('Error fetching student counts:', error);
+      }
+    };
+
+    fetchStudentCounts();
+  }, [data]);
+
+
+
+
   return (
-    <div className={classes.root}>
-    <div style={{ marginTop: '20px' }}> {/* Add margin or padding to ensure content below the header */}
-      <div className={classes.profileContainer}>
-        <Avatar src={userPic} alt="Profile Picture" className={classes.profilePic} />
-        <div>
-          <Typography variant="h4" className={classes.greetings} style={{fontFamily: 'Poppins', fontWeight: 500, fontSize: 30}}>
-            Hey {firstName}!
-          </Typography>
-          <Typography variant="body1" className={classes.message} style={{fontFamily: 'Poppins', fontWeight: 300, fontSize: 15}}>
-            We hope you have a nice day.
-          </Typography>
+<div className={classes.root}>
+      <div style={{ marginTop: '20px' }}>
+        {/* Add margin or padding to ensure content below the header */}
+        <div className={classes.profileContainer}>
+          <Avatar src={userPic} alt="Profile Picture" className={classes.profilePic} />
+          <div>
+            {/* Use the dynamic firstName and lastName here */}
+            <Typography variant="h4" className={classes.greetings} style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 30 }}>
+              Hey {firstName}!
+            </Typography>
+            <Typography variant="body1" className={classes.message} style={{ fontFamily: 'Poppins', fontWeight: 300, fontSize: 15 }}>
+              We hope you have a nice day.
+            </Typography>
         </div>
       </div>
       <div className={classes.bodyContainer}>
         <div className={classes.bigBox}>
           <Typography
-            variant="h5"
-            className={classes.boxHeading}
-            style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
-          >
-            Calendar
-          </Typography>
+              variant="h5"
+              className={classes.boxHeading}
+              style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
+            >
+              Calendar
+            </Typography>
+            <div className={classes.boxContent}>
           <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div className={classes.calendarContainer}>
               <Calendar value={currentDate} tileClassName={tileClassName} />
             </div>
           </div>
+          </div>
         </div>
-         <div className={classes.regularBox}>
-                  <Typography
-                    variant="h5"
-                    className={classes.boxHeading}
-                    style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
-                  >
-                    Assigned Classes
-                  </Typography>
-                  <div className={classes.boxContent}>
-                    <div className={classes.scrollContainer}>
-                      {/* Render the list of classIds */}
-                      {classIds.map(classId => (
-                        <div key={classId} className={classes.classItem}>
-                          <Avatar src={classIcon} alt="Class Icon" className={classes.classIcon} />
-                          <Typography variant="body1" className={classes.className}>
-                            {classId}
-                          </Typography>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+        <div className={classes.regularBox}style={{ overflow:'auto'}}>
+          <Typography
+              variant="h5"
+              className={classes.boxHeading}
+              style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
+            >
+              Assigned Classes
+            </Typography>
+            <div className={classes.boxContent}>
+
+
+
+
+
+          <div style={{ background: '#fff', padding: '10px', color: '#000' }}>
+  {/* Display the fetched data */}
+  {data.map((item) => (
+    <div
+      key={item.id}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderBottom: '1px solid #ccc',
+        marginBottom: '50px',
+      }}
+    >
+      {/* Increase the marginLeft value to move the presentation icon towards the right */}
+      <img src={presentation} alt="Item Image" style={{ width: '50px', height: '50px', marginRight: '10px', marginLeft: '70px' }} />
+      <div>
+        <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>{item.classId}</p>
+        <p>Total Students: {classStudentCounts[item.classId] || 0}</p>
+      </div>
+    </div>
+
+  ))}
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
         <div className={classes.regularBox}>
           <Typography
-            variant="h5"
-            className={classes.boxHeading}
-            style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
-          >
-            Notifications
-          </Typography>
+              variant="h5"
+              className={classes.boxHeading}
+              style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
+            >
+              Notifications
+            </Typography>
+            <div className={classes.boxContent}>
           <div className={classes.notificationBox}>
             {filteredNotificationsData.map((notification) => (
               <div key={notification.id} className={classes.notificationItem}>
                 <Avatar
-                  src={userPic}
+                  src={teachernotification}
                   alt="Sender Profile Picture"
                   className={classes.notificationProfilePic}
                 />
@@ -416,6 +487,7 @@ const filteredNotificationsData = notificationsData.filter(
                 )}
               </div>
             ))}
+          </div>
           </div>
         </div>
       </div>

@@ -13,9 +13,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
 import logo from "../../../images/logo.png";
 import downArrow from "../../../images/downArrow.png";
-
 import axios from 'axios';
 import userPic from "../../../images/user.png";
+import { BACKEND_URL, TEACHER_EMAIL } from '../config'; // Import the BACKEND_URL and TEACHER_EMAIL from the config.js file
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -130,6 +130,13 @@ const TeacherHeader = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const [teacherData, setTeacherData] = useState(null);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+
+  const [data, setData] = useState([]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -144,7 +151,7 @@ const TeacherHeader = () => {
         // After the logout process is complete, navigate the user to the '/' page
         navigate('/');
       };
-    const [teacherData, setTeacherData] = useState(null);
+
 
        useEffect(() => {
          // Fetch teacher data from the backend
@@ -157,9 +164,26 @@ const TeacherHeader = () => {
            });
        }, []);
 
-       const firstName = teacherData ? teacherData[0].firstName : '';
-       const lastName = teacherData ? teacherData[0].lastName : '';
+ // Add this line to define the 'data' state variable
 
+             useEffect(() => {
+                 const fetchData = async () => {
+                   try {
+                     const response = await fetch(`${BACKEND_URL}/teachers/emailId/${TEACHER_EMAIL}`);
+                     const jsonData = await response.json();
+                     setData(jsonData);
+
+                     if (jsonData && jsonData.length > 0) {
+                       setFirstName(jsonData[0].firstName);
+                       setLastName(jsonData[0].lastName);
+                     }
+                   } catch (error) {
+                     console.error('error fetching data:', error);
+                   }
+                 };
+
+                 fetchData();
+               }, []);
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
@@ -177,9 +201,13 @@ const TeacherHeader = () => {
             <Button component={Link} to="/Attendance" className={classes.navButton}>
                Attendance
              </Button>
+             <Button component={Link} to="/UpdatePage" className={classes.navButton}>
+                  Update
+              </Button>
              <Button component={Link} to="/TeacherReport" className={classes.navButton}>
                  Report
              </Button>
+
 
           </div>
           <div className={classes.searchContainer}>
