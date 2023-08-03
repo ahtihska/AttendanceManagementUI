@@ -4,40 +4,13 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import { PieChart } from '@mui/x-charts';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const sampleData = [
-                     {"id": 1, "class_id": "a1", "student_id": 1, "teacher_id": 5001, "date": "2023-07-01", "present": true},
-                     {"id": 2, "class_id": "a1", "student_id": 2, "teacher_id": 5001, "date": "2023-07-01", "present": true},
-                     {"id": 3, "class_id": "a1", "student_id": 3, "teacher_id": 5001, "date": "2023-07-01", "present": false},
-                     {"id": 4, "class_id": "a1", "student_id": 1, "teacher_id": 5001, "date": "2023-07-02", "present": true},
-                     {"id": 5, "class_id": "a1", "student_id": 2, "teacher_id": 5001, "date": "2023-07-02", "present": false},
-                     {"id": 6, "class_id": "a1", "student_id": 3, "teacher_id": 5001, "date": "2023-07-02", "present": false},
-                     {"id": 7, "class_id": "a1", "student_id": 1, "teacher_id": 5001, "date": "2023-07-03", "present": true},
-                     {"id": 8, "class_id": "a1", "student_id": 2, "teacher_id": 5001, "date": "2023-07-03", "present": true},
-                     {"id": 9, "class_id": "a1", "student_id": 3, "teacher_id": 5001, "date": "2023-07-03", "present": false},
-                     {"id": 10, "class_id": "a1", "student_id": 4, "teacher_id": 5001, "date": "2023-07-01", "present": true},
-                     {"id": 11, "class_id": "a1", "student_id": 5, "teacher_id": 5001, "date": "2023-07-01", "present": false},
-                     {"id": 12, "class_id": "a1", "student_id": 6, "teacher_id": 5001, "date": "2023-07-01", "present": true},
-                     {"id": 13, "class_id": "a1", "student_id": 4, "teacher_id": 5001, "date": "2023-07-02", "present": false},
-                     {"id": 14, "class_id": "a1", "student_id": 5, "teacher_id": 5001, "date": "2023-07-02", "present": true},
-                     {"id": 15, "class_id": "a1", "student_id": 6, "teacher_id": 5001, "date": "2023-07-02", "present": true},
-                     {"id": 16, "class_id": "a1", "student_id": 4, "teacher_id": 5001, "date": "2023-07-03", "present": true},
-                     {"id": 17, "class_id": "a1", "student_id": 5, "teacher_id": 5001, "date": "2023-07-03", "present": false},
-                     {"id": 18, "class_id": "a1", "student_id": 6, "teacher_id": 5001, "date": "2023-07-03", "present": true},
-                     {"id": 19, "class_id": "a1", "student_id": 7, "teacher_id": 5001, "date": "2023-07-01", "present": false},
-                     {"id": 20, "class_id": "a1", "student_id": 7, "teacher_id": 5001, "date": "2023-07-02", "present": false},
-                     {"id": 21, "class_id": "a1", "student_id": 7, "teacher_id": 5001, "date": "2023-07-03", "present": true},
-                     {"id": 22, "class_id": "a1", "student_id": 8, "teacher_id": 5001, "date": "2023-07-01", "present": true},
-                     {"id": 23, "class_id": "a1", "student_id": 8, "teacher_id": 5001, "date": "2023-07-02", "present": true},
-                     {"id": 24, "class_id": "a1", "student_id": 8, "teacher_id": 5001, "date": "2023-07-03", "present": false},
-                     {"id": 25, "class_id": "a1", "student_id": 9, "teacher_id": 5001, "date": "2023-07-01", "present": true},
-                     {"id": 26, "class_id": "a1", "student_id": 9, "teacher_id": 5001, "date": "2023-07-02", "present": false},
-                     {"id": 27, "class_id": "a1", "student_id": 9, "teacher_id": 5001, "date": "2023-07-03", "present": true}
-];
+const baseUrl = 'http://localhost:8080/api/v1/attendance';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -102,37 +75,71 @@ const useStyles = makeStyles((theme) => ({
       opacity:0.7,
   },
 }));
+const formatDate = (date) => {
+   const year = date.getFullYear();
+   const month = String(date.getMonth() + 1).padStart(2, '0');
+   const day = String(date.getDate()).padStart(2, '0');
+   return `${year}-${month}-${day}`;
+};
+   const AttendanceReport = ({ type, startDate, endDate, classId }) => {
+      const [attendanceData, setAttendanceData] = useState([]);
+      const [totalDays, setTotalDays] = useState(0);
 
-const calculateStudentAttendance = (data) => {
-  const studentAttendance = {};
-  data.forEach((entry) => {
-    const { student_id, present } = entry;
-    if (!studentAttendance[student_id]) {
-      studentAttendance[student_id] = {
-        name: `Student ${student_id}`,
-        totalDays: 0,
-        totalPresentDays: 0,
+      const fetchData = (startDate, endDate, classId) => {
+        if (!classId || !startDate || !endDate) {
+          console.log('Please select a class and date range');
+          return;
+        }
+
+        const apiUrl = `${baseUrl}/studentsbyclass?classId=${classId}&startdate=${formatDate(
+          startDate
+        )}&enddate=${formatDate(endDate)}`;
+
+        axios
+          .get(apiUrl)
+          .then((response) => {
+            setAttendanceData(response.data);
+            setTotalDays(calculateTotalDays(response.data));
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+        });
       };
-    }
-    studentAttendance[student_id].totalDays++;
-    if (present) {
-      studentAttendance[student_id].totalPresentDays++;
-    }
-  });
 
-  Object.values(studentAttendance).forEach((student) => {
-      student.attendancePercentage = (student.totalPresentDays / student.totalDays) * 100;
-    });
+      useEffect(() => {
+        fetchData(startDate, endDate, classId);
+      }, [startDate, endDate, classId]);
 
-    return Object.values(studentAttendance);
-  };
+    const calculateStudentAttendance = (data) => {
+      const studentAttendance = {};
+      data.forEach((entry) => {
+        const { student_id, present } = entry;
+        if (!studentAttendance[student_id]) {
+          studentAttendance[student_id] = {
+            name: `Student ${student_id}`,
+            totalDays: 0,
+            totalPresentDays: 0,
+          };
+        }
+        studentAttendance[student_id].totalDays++;
+        if (present) {
+          studentAttendance[student_id].totalPresentDays++;
+        }
+      });
 
-  const calculateTotalDays = (data) => {
-    const uniqueDates = new Set(data.map((entry) => entry.date));
-    return uniqueDates.size;
-  };
+      Object.values(studentAttendance).forEach((student) => {
+          student.attendancePercentage = (student.totalPresentDays / student.totalDays) * 100;
+        });
 
-  const MainAttendanceTable = ({ studentAttendanceData, totalDays }) => { const classes = useStyles();
+        return Object.values(studentAttendance);
+      };
+
+      const calculateTotalDays = (data) => {
+        const uniqueDates = new Set(data.map((entry) => entry.date));
+        return uniqueDates.size;
+    };
+
+    const MainAttendanceTable = ({ studentAttendanceData, totalDays }) => { const classes = useStyles();
   return (
       <div >
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -219,18 +226,16 @@ const calculateStudentAttendance = (data) => {
     );
   };
 
-  const AttendanceReport = ({ type }) => {
-    const studentAttendanceData = calculateStudentAttendance(sampleData);
-    const studentsWithLowAttendance = studentAttendanceData.filter(
-        (student) => student.attendancePercentage < 75
-      );
-    const totalDays = calculateTotalDays(sampleData);
 
+  const studentAttendanceData = calculateStudentAttendance(attendanceData);
+  const studentsWithLowAttendance = studentAttendanceData.filter(
+    (student) => student.attendancePercentage < 75
+  );
     return (
       <React.Fragment>
-        {type === 'main' && <MainAttendanceTable studentAttendanceData={studentAttendanceData} totalDays={totalDays} />}
-        {type === 'low' && <LowAttendanceTable studentsWithLowAttendance={studentsWithLowAttendance} totalDays={totalDays} />}
-        {type === 'pie' && (<PieChartSection studentAttendanceData={studentAttendanceData} studentsWithLowAttendance={studentsWithLowAttendance} />)}
+        {type === 'main' && <MainAttendanceTable studentAttendanceData={studentAttendanceData} totalDays={totalDays} classId={classId}/>}
+        {type === 'low' && <LowAttendanceTable studentsWithLowAttendance={studentsWithLowAttendance} totalDays={totalDays} classId={classId}/>}
+        {type === 'pie' && (<PieChartSection studentAttendanceData={studentAttendanceData} studentsWithLowAttendance={studentsWithLowAttendance} classId={classId}/>)}
       </React.Fragment>
     );
   };
