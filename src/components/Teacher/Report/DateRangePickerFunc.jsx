@@ -23,7 +23,7 @@ const DateRangePickerFunc = ({ onGetData, classId, startDateProp, endDateProp, s
       color: 'black',
       backgroundColor: '#fff',
       fontSize: 13,
-      fontFamily: 'Poppins',
+
       height: '32px',
       width: '200px',
     };
@@ -34,7 +34,7 @@ const DateRangePickerFunc = ({ onGetData, classId, startDateProp, endDateProp, s
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <div style={{ display: 'flex', alignItems: 'center', padding: '10px'}}>
-        <span style={{ marginRight: '10px', marginLeft:'30px', fontSize: 18, fontFamily: 'Poppins' }}>DATE : </span>
+        <span style={{ marginRight: '10px', marginLeft:'30px', fontSize: 18}}>DATE : </span>
         <DatePicker
           selected={startDate}
           onChange={handleStartDateChange}

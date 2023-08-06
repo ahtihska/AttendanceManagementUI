@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   greetings: {
-    fontFamily: 'Poppins',
+
     color: 'black', // Set the font color to black
     fontSize: 30,
     fontWeight: 'medium',
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   message: {
     fontSize: 13,
     color: 'black',
-    fontFamily: 'Poppins',
+
     fontWeight: 'light',
   },
   bodyContainer: {
@@ -111,17 +111,17 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
   boldContent: {
-    fontFamily: 'Poppins',
+
     fontWeight: 'Bold',
     color: 'black',
   },
   fadedContent: {
-    fontFamily: 'Poppins',
+
     opacity: 0.5,
     color: 'black',
   },
   notification: {
-    fontFamily: 'Poppins',
+
     fontSize: 11,
     color: 'black',
     marginTop: theme.spacing(1),
@@ -146,25 +146,25 @@ const useStyles = makeStyles((theme) => ({
   },
   tileHeadings: {
     fontSize: 20,
-    fontFamily: 'Poppins',
+
     fontWeight: 700,
     position: 'absolute',
     color: 'black',
     padding: '20px',
   },
   heading: {
-    fontFamily: 'Poppins',
+
     fontWeight: 'Bold',
     color: 'black',
     fontSize: 26,
     marginBottom: theme.spacing(2),
   },
     today: {
-      backgroundColor: '#4150B7',
+      backgroundColor: '#000',
       color: '#fff',
     },
   clearButton: {
-    backgroundColor: '#4150B7',
+    backgroundColor: '#000',
     color: 'white',
     marginLeft: theme.spacing(1),
     float: 'right',
@@ -383,7 +383,7 @@ useEffect(() => {
                   <Typography
                     variant="h5"
                     className={classes.boxHeading}
-                    style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
+                    style={{  fontWeight: 600, fontSize: 20, color: '#000' }}
                   >
                     Calendar
                   </Typography>

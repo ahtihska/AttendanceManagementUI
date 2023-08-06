@@ -10,10 +10,7 @@ Clone the application
 
 To Install Dependecies
 
-### `npm install --legacy-peer-deps` 
-
-or
-### `npm install --force`
+### `npm install`
 
 To Run the application in local
 ### `npm start`

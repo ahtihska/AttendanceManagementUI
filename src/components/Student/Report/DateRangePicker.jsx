@@ -20,7 +20,7 @@ const DateRangePicker = () => {
       color: 'black', // Change the text color to black
       backgroundColor: '#fff',
       fontSize: 13,
-      fontFamily: 'Poppins',
+
       height: '27px',
 
     };
@@ -28,7 +28,7 @@ const DateRangePicker = () => {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <span style={{ marginRight: '10px', marginLeft:'10px', fontSize: 18, fontFamily: 'Poppins', color: '#4150B7' }}>DATE : </span>
+        <span style={{ marginRight: '10px', marginLeft:'10px', fontSize: 18,  color: '#4150B7' }}>DATE : </span>
         <DatePicker
           selected={startDate}
           onChange={handleStartDateChange}

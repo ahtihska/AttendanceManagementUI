@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
@@ -15,15 +17,16 @@ import logo from "../../../images/logo.png";
 import downArrow from "../../../images/downArrow.png";
 import axios from 'axios';
 import userPic from "../../../images/user.png";
-import { BACKEND_URL, TEACHER_EMAIL } from '../config'; // Import the BACKEND_URL and TEACHER_EMAIL from the config.js file
+import { BACKEND_URL, TEACHER_EMAIL } from '../config';
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-//     backgroundColor: '#0F1E23',
-    height: 80,
-    borderBottom: `1px solid #2C3537`,
+ 'App-header': {
+    width: '100%',
+    height: '200px !important'
+
   },
-  headerContent: {
+
+headerContent: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -34,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   logo: {
-    width: 30,
-    height: 30,
+    width: 60,
+    height: 60,
     marginRight: theme.spacing(1),
   },
   appName: {
-    fontFamily: 'Poppins',
+
     fontWeight: 'bold',
     flex: 1,
     marginRight: theme.spacing(1),
@@ -47,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   navButtons: {
     display: 'flex',
     alignItems: 'center',
-    fontFamily: 'Poppins',
+
     fontWeight: 'bold',
     '& > *:not(:last-child)': {
       marginLeft: theme.spacing(2),
@@ -60,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     color: '#fff',
     marginRight: theme.spacing(2),
-    fontFamily: 'Poppins',
+
     fontWeight: 'regular',
     position: 'relative',
     '&::after': {
@@ -68,18 +71,18 @@ const useStyles = makeStyles((theme) => ({
       position: 'absolute',
       width: '100%',
       height: '4px',
-      bottom: '-34px',
-      backgroundColor: '#F47458',
+      bottom: '-36px',
+      backgroundColor: '#FFF',
       left: 0,
       opacity: 0,
       transition: 'opacity 0.3s',
     },
     '&:hover::after': {
       opacity: 1,
-      backgroundColor: '#F47458',
+      backgroundColor: '#FFF',
     },
     '&:hover': {
-      color: '#F47458',
+      color: '#FFF',
     },
   },
   searchContainer: {
@@ -127,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TeacherHeader = () => {
-  const classes = useStyles();
+const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const [teacherData, setTeacherData] = useState(null);
@@ -164,7 +167,7 @@ const TeacherHeader = () => {
            });
        }, []);
 
- // Add this line to define the 'data' state variable
+
 
              useEffect(() => {
                  const fetchData = async () => {
@@ -185,57 +188,54 @@ const TeacherHeader = () => {
                  fetchData();
                }, []);
   return (
-    <AppBar position="static" className={classes.appBar}>
-      <Toolbar>
+      <header className="App-header"style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px',  height: '80px' }}>
+
         <div className={classes.headerContent}>
-          <div className={classes.logoContainer} style={{ marginTop: '6px' }}>
+          <div className={classes.logoContainer}>
             <img src={logo} alt="Logo" className={classes.logo} />
             <Typography variant="h5" className={classes.appName}>
               Attend
             </Typography>
           </div>
-          <div className={classes.navButtons} style={{ marginTop: '6px' }}>
+          <div className={classes.navButtons}>
             <Button component={Link} to="/TeacherDashboard" className={classes.navButton}>
               Dashboard
             </Button>
             <Button component={Link} to="/Attendance" className={classes.navButton}>
-               Attendance
-             </Button>
-             <Button component={Link} to="/UpdatePage" className={classes.navButton}>
-                  Update
-              </Button>
-             <Button component={Link} to="/TeacherReport" className={classes.navButton}>
-                 Report
-             </Button>
-
-
+              Attendance
+            </Button>
+            <Button component={Link} to="/Update" className={classes.navButton}>
+              Update
+            </Button>
+            <Button component={Link} to="/TeacherReport" className={classes.navButton}>
+              Report
+            </Button>
           </div>
           <div className={classes.searchContainer}>
             <SearchIcon className={classes.searchIcon} />
             <input type="text" placeholder="Search" className={classes.searchInput} />
           </div>
           <div className={classes.profileContainer}>
-            <Avatar src={userPic} ealt="Profile" className={classes.profilePic} />
+            <Avatar src={userPic} alt="Profile" className={classes.profilePic} />
             <Typography variant="body2" style={{ marginRight: '8px', color: '#fff' }}>
               {firstName} {lastName}
             </Typography>
-         <IconButton className={classes.dropdownButton} onClick={handleClick}>
-            <img src={downArrow} alt="Dropdown" className={classes.downArrowIcon} />
-          </IconButton>
-          <Menu
-            id="dropdown-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
+            <IconButton className={classes.dropdownButton} onClick={handleClick}>
+              <img src={downArrow} alt="Dropdown" className={classes.downArrowIcon} />
+            </IconButton>
+            <Menu
+              id="dropdown-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
           </div>
         </div>
-      </Toolbar>
-    </AppBar>
-  );
-};
+      </header>
+    );
+  };
 
-export default TeacherHeader;
+  export default TeacherHeader;

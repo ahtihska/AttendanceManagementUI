@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     fontSize: 13,
-    fontFamily: 'Poppins',
+
     fontWeight: 'light',
   },
   bodyContainer: {
@@ -120,12 +120,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   boldContent: {
-    fontFamily: 'Poppins',
+
     fontWeight: 'Bold',
     color: 'black',
   },
   fadedContent: {
-    fontFamily: 'Poppins',
+
     opacity: 0.5,
     color: 'black',
   },
@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tileHeadings: {
     fontSize: 20,
-    fontFamily: 'Poppins',
+
     fontWeight: 700,
     position: 'absolute',
     color: 'black',
@@ -148,7 +148,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'left',
-    fontFamily: 'Poppins',
+
     fontSize: 11,
     color: 'black',
     overflow: 'hidden',
@@ -178,14 +178,14 @@ const DateRangePicker = ({ onDateChange }) => {
     color: 'black',
     backgroundColor: '#fff',
     fontSize: 13,
-    fontFamily: 'Poppins',
+
     height: '27px',
   };
 
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <span style={{ marginRight: '10px', marginLeft: '10px', fontSize: 18, fontFamily: 'Poppins', color: '#4150B7' }}>DATE : </span>
+        <span style={{ marginRight: '10px', marginLeft: '10px', fontSize: 18, color: '#4150B7' }}>DATE : </span>
         <DatePicker
           selected={startDate}
           onChange={handleStartDateChange}

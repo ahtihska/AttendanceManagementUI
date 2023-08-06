@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
      display: 'flex',
          flexDirection: 'column',
          alignItems: 'left',
-         fontFamily: 'Poppins',
+
          fontSize: 11,
          color: 'black',
          overflow: 'hidden',
@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
      display: 'flex',
          flexDirection: 'column',
          alignItems: 'left',
-         fontFamily: 'Poppins',
+
          fontSize: 11,
          color: 'black',
          overflow: 'auto',

@@ -2,12 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Box, Typography } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import bg from '../../images/bg.jpg';
-import logo from '../../images/logo.png';
+
+
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   landingPage: {
-    backgroundImage: `url(${bg})`,
+
     backgroundSize: 'contain', // Use 'contain' to fit the entire image within the background area
     backgroundPosition: 'center', // Center the background image
     height: '100vh',
@@ -36,13 +36,9 @@ const useStyles = makeStyles((theme) => ({
     height: '40vh', // Increase the height of the white box
     width: '400px', // Reduce the width of the white box
   },
-  logo: {
-    marginBottom: theme.spacing(3),
-    width: 30,
-    height: 30,
-  },
+
   button: {
-    backgroundColor: 'orange',
+    backgroundColor: '#000',
     borderRadius: theme.spacing(2),
     color: 'white',
     textTransform: 'none',
@@ -62,9 +58,8 @@ const LandingPage = () => {
     <div className={classes.landingPage}>
       <div className={classes.leftSide}>
         <div className={classes.whiteBox}>
-          <Box className={classes.logo}>
-            <img src={logo} className={classes.logo} alt="Logo" />
-          </Box>
+
+
           <Typography variant="h4">Welcome to Attendance Management App</Typography>
           <Typography variant="body1">
             Streamline your attendance tracking process and improve student engagement with our user-friendly web application.

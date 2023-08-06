@@ -24,14 +24,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   greetings: {
-    fontFamily: 'Poppins',
+
     fontSize: 30,
     fontWeight: 'medium',
     marginBottom: theme.spacing(1),
   },
   message: {
     fontSize: 13,
-    fontFamily: 'Poppins',
+
     fontWeight: 'light',
   },
   bodyContainer: {
@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     },
     className: {
       marginRight: theme.spacing(2),
-      fontFamily: 'Poppins',
+
       fontWeight: 600,
       color: '#000',
       fontSize: 20,
@@ -110,13 +110,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   boldContent: {
-      fontFamily: 'Poppins',
+
       fontWeight: 'Bold',
 
       color: 'black',
     },
   fadedContent:{
-      fontFamily: 'Poppins',
+
       opacity:0.5,
       color: 'black',
   },
@@ -126,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
   },
   elementStyle :{
     marginBottom: '10px',
-    fontFamily: 'Poppins',
+
     fontSize : 22,
     fontWeight: 'medium',
     margin: theme.spacing(6),
@@ -150,7 +150,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   items:{
-        fontFamily: 'Poppins',
+
         fontSize : 20,
         color: 'black',
      marginTop: theme.spacing(1),

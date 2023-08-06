@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tileHeadings: {
       fontSize: 20,
-      fontFamily: 'Poppins',
+
       fontWeight: 700,
       color: 'black',
       padding: '10px',
@@ -62,12 +62,12 @@ const useStyles = makeStyles((theme) => ({
 
   },
   sideTileHeadings: {
-      fontFamily: 'Poppins',
+
       opacity:0.7,
       color: 'black',
   },
   cornerBox: {
-      fontFamily: 'Poppins',
+
       fontSize: 16,
       fontWeight: 700,
       marginLeft: theme.spacing(100),
@@ -75,13 +75,13 @@ const useStyles = makeStyles((theme) => ({
       marginRight: '20px',
   },
   name: {
-      fontFamily: 'Poppins',
+
       fontWeight: 400,
       color: 'black',
       fontSize : 15,
   },
   days: {
-      fontFamily: 'Poppins',
+
       fontWeight: 700,
       color: '#CDCDCD',
       fontSize : 12,
