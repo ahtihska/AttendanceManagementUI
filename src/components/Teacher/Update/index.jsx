@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     fontSize: 13,
-    fontFamily: 'Poppins',
+
     fontWeight: 'light',
   },
   bodyContainer: {
@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
   message: {
       fontSize: 13,
       color: 'black',
-      fontFamily: 'Poppins',
+
       fontWeight: 'light',
     },
     bodyContainer: {
@@ -159,18 +159,18 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
       },
   boldContent: {
-    fontFamily: 'Poppins',
+
     fontWeight: 'Bold',
     color: 'black',
   },
   fadedContent: {
-    fontFamily: 'Poppins',
+
     opacity: 0.5,
     color: 'black',
   },
   tileHeadings: {
     fontSize: 20,
-    fontFamily: 'Poppins',
+
     fontWeight: 700,
     position: 'absolute',
     color: 'black',
@@ -226,7 +226,7 @@ const useStyles = makeStyles((theme) => ({
      color: 'black',
      backgroundColor: '#fff',
      fontSize: 13,
-     fontFamily: 'Poppins',
+
      height: '27px',
     },
 
@@ -278,7 +278,7 @@ const DateRangePicker = ({ onDateChange }) => {
   return (
     <div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span style={{ marginRight: '10px', marginLeft: '10px', fontSize: 18, fontFamily: 'Poppins', color: '#4150B7' }}>DATE : </span>
+          <span style={{ marginRight: '10px', marginLeft: '10px', fontSize: 18,  color: '#4150B7' }}>DATE : </span>
           <DatePicker
             selected={Date}
             onChange={handleDateChange}
@@ -478,7 +478,7 @@ const [selectedDate, setSelectedDate] = useState(null);
                 {/* Right side - Dropdown */}
                 <div className={classes.selectWrapper} style = {{marginRight : '20px'}}>
                   <InputLabel className={classes.inputLabel} htmlFor="class-dropdown">
-                      <span style={{ marginRight: '10px', marginLeft: '10px', fontSize: 18, fontFamily: 'Poppins', color: '#4150B7' }}>CLASS : </span>
+                      <span style={{ marginRight: '10px', marginLeft: '10px', fontSize: 18, color: '#4150B7' }}>CLASS : </span>
                     </InputLabel>
                     <FormControl className={classes.formControl}>
                       <Select

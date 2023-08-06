@@ -2,29 +2,21 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import TeacherHeader from './components/Teacher/TeacherHeader';
-import TeacherFooter from './components/Teacher/TeacherFooter';
+
 import StudentHeader from './components/Student/StudentHeader';
-import StudentFooter from './components/Student/StudentFooter';
+import Footer from './components/Footer';
 import Home from './components/Home';
 import TeacherDashboard from './components/Teacher/Dashboard';
 import StudentDashboard from './components/Student/Dashboard';
 import Attendance from './components/Teacher/Attendance';
 import TeacherReport from './components/Teacher/Report';
-import Substitute from './components/Teacher/Substitute';
+import HomeHeader from './components/HomeHeader';
 import StudentReport from './components/Student/Report';
 import Leave from './components/Student/Leave';
-import UpdatePage from './components/Teacher/UpdatePage';
-const Header = () => {
-  // Implement your header component here
-  return <div></div>;
-};
+import UpdatePage from './components/Teacher/Update';
 
-const Footer = () => {
-  // Implement your footer component here
-  return <div></div>;
-};
 
-const App = () => {
+function App() {
   return (
     <Router>
       <Routes>
@@ -32,7 +24,7 @@ const App = () => {
           path="/*"
           element={
             <>
-              <Header />
+              <HomeHeader />
               <Home />
               <Footer />
             </>
@@ -45,7 +37,7 @@ const App = () => {
               <TeacherHeader />
               <TeacherDashboard />
 
-              <TeacherFooter />
+              <Footer />
             </>
           }
         />
@@ -56,7 +48,7 @@ const App = () => {
               <TeacherHeader />
               <Attendance />
 
-              <TeacherFooter />
+              <Footer />
             </>
           }
         />
@@ -67,18 +59,17 @@ const App = () => {
               <TeacherHeader />
               <TeacherReport />
 
-              <TeacherFooter />
+              <Footer />
             </>
           }
         />
         <Route
-          path="/UpdatePage"
+          path="/Update"
           element={
             <>
               <TeacherHeader />
               <UpdatePage />
-
-              <TeacherFooter />
+              <Footer />
             </>
           }
         />
@@ -88,7 +79,7 @@ const App = () => {
             <>
               <StudentHeader />
               <StudentDashboard />
-              <StudentFooter />
+              <Footer />
             </>
           }
         />
@@ -98,7 +89,7 @@ const App = () => {
             <>
               <StudentHeader />
               <StudentReport />
-              <StudentFooter />
+              <Footer />
             </>
           }
         />
@@ -108,7 +99,7 @@ const App = () => {
             <>
               <StudentHeader />
               <Leave />
-              <StudentFooter />
+              <Footer />
             </>
           }
         />

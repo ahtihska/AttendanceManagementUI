@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
    },
   greetings: {
     color:'black',
-    fontFamily: 'Poppins',
+
     fontSize: 30,
     fontWeight: 'medium',
     marginBottom: theme.spacing(1),
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   message: {
     fontSize: 13,
     color: 'black',
-    fontFamily: 'Poppins',
+
     fontWeight: 'light',
   },
   bodyContainer: {
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     margin: '8px',
     padding: '0 8px',
-    fontFamily: 'Poppins',
+
     fontWeight: 500,
     color: '#000',
     zIndex: 1,
@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
   today: {
-    backgroundColor: '#4150B7',
+    backgroundColor: '#000',
     color: '#fff',
   },
   classItem: {
@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
 
   className: {
     marginRight: theme.spacing(2),
-    fontFamily: 'Poppins',
+
     fontWeight: 600,
     color: '#000',
     fontSize: 20,
@@ -116,13 +116,13 @@ const useStyles = makeStyles((theme) => ({
   },
   classDate: {
     marginLeft: 'auto',
-    fontFamily: 'Poppins',
+
     color: '#ccc',
     textAlign: 'right',
   },
   classSubstituted: {
     marginRight: theme.spacing(2),
-    fontFamily: 'Poppins',
+
     color: '#ccc',
     alignSelf: 'flex-end',
     textAlign: 'right',
@@ -374,10 +374,10 @@ useEffect(() => {
           <Avatar src={userPic} alt="Profile Picture" className={classes.profilePic} />
           <div>
             {/* Use the dynamic firstName and lastName here */}
-            <Typography variant="h4" className={classes.greetings} style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 30 }}>
+            <Typography variant="h4" className={classes.greetings} style={{ fontWeight: 500, fontSize: 30 }}>
               Hey {firstName}!
             </Typography>
-            <Typography variant="body1" className={classes.message} style={{ fontFamily: 'Poppins', fontWeight: 300, fontSize: 15 }}>
+            <Typography variant="body1" className={classes.message} style={{ fontWeight: 300, fontSize: 15 }}>
               We hope you have a nice day.
             </Typography>
         </div>
@@ -387,7 +387,7 @@ useEffect(() => {
           <Typography
               variant="h5"
               className={classes.boxHeading}
-              style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
+              style={{  fontWeight: 600, fontSize: 20, color: '#000' }}
             >
               Calendar
             </Typography>
@@ -403,7 +403,7 @@ useEffect(() => {
           <Typography
               variant="h5"
               className={classes.boxHeading}
-              style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
+              style={{  fontWeight: 600, fontSize: 20, color: '#000' }}
             >
               Assigned Classes
             </Typography>
@@ -455,7 +455,7 @@ useEffect(() => {
           <Typography
               variant="h5"
               className={classes.boxHeading}
-              style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#000' }}
+              style={{ fontWeight: 600, fontSize: 20, color: '#000' }}
             >
               Notifications
             </Typography>
@@ -468,7 +468,7 @@ useEffect(() => {
                   alt="Sender Profile Picture"
                   className={classes.notificationProfilePic}
                 />
-                <div className={classes.notificationContent} style={{fontFamily: 'Poppins'}}>
+                <div className={classes.notificationContent}>
                   <Typography variant="body1">{notification.sender}</Typography>
                   <Typography variant="body2">{notification.date}</Typography>
                   <Typography variant="body2">{notification.message} </Typography>
